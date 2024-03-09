@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<div class="top_content_index">
+  {% if recipe.image%}
+  <img
+    class="recipe_img"
+    src="{{ recipe.image.url }}"
+    alt="{{ recipe.name }}"
+  {% else %}
+  <h2 class="recipe_alt_image_index">Изображение отсутствует</h2>
+  {% endif %}
+  <br>
+  <h2 class="text_index_name">{{ recipe.name }}</h2>
+  <h2 class="text_index">{{ recipe.category_recipe }}</h2>
+  <h2 class="text_index">Ингридиенты: <br> {{ recipe.description|linebreaksbr }}</h2>
+  <h2 class="text_index">Время приготовления: {{ recipe.time }} (часы, минуты)</h2>
+  <h2 class="text_index">Рецепт: <br> {{ recipe.steps|linebreaksbr }}</h2>
+  <h2 class="text_index">Автор: {{ recipe.author }}</h2>
+  <h2 class="text_index">Рецепт добавлен: {{ recipe.time_date_add }}</h2>
+  {% if recipe.author == request.user %}
+<!--    <li><a href="/recipe_redact">Редактировать</a></li>-->
+    <a href="{% url 'recipe_redact' recipe.id %}">Редактировать</a>
+  {% endif %}
+</div>
+{% endblock %}

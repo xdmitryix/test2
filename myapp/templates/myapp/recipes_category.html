@@ -1,0 +1,32 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<div class="recipes_cat_content">
+    <form class="form_recipes" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Показать рецепты">
+    </form>
+    <br>
+    <br>
+    <br>
+    <ul class="recipes_category">
+    {% for recipe in recipes%}
+      {% if recipe.image%}
+      <img
+        class="recipe_img"
+        src="{{ recipe.image.url }}"
+        alt="{{ recipe.name }}"
+      {% else %}
+      <h2 class="recipe_alt_image_index">Изображение отсутствует</h2>
+      {% endif %}
+      <br>
+      <h2 class="text_index_name">{{ recipe.name }}</h2>
+      </h2><li class="link_recept"><a href="{% url 'recipe_show' recipe.id %}">Посмотреть рецепт</a></li>
+      <br>
+        <h2 class="text_index_author">Автор: {{ recipe.author }}</h2>
+        <br />
+        <br />
+        <br />
+      {% endfor %}
+        </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'myapp/base.html' %} {% load static %} {% block content %}
+<div class="top_content_index">
+  <h2 class="content_index_text">Несколько случайных рецептов:</h2>
+  <br>
+  <br>
+  {% for recipe in recipes%}
+  {% if recipe.image%}
+  <img
+    class="recipe_img"
+    src="{{ recipe.image.url }}"
+    alt="{{ recipe.name }}"
+  {% else %}
+  <h2 class="recipe_alt_image_index">Изображение отсутствует</h2>
+  {% endif %}
+  <br>
+  <h2 class="text_index_name">{{ recipe.name }}</h2>
+  <li class="link_recept"><a href="{% url 'recipe_show' recipe.id %}">Посмотреть рецепт</a></li>
+  <br>
+  <h2 class="text_index_author">Автор: {{ recipe.author }}</h2>
+  <br />
+  <br />
+  <br />
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/styles.css' %}"
+      type="text/css"
+    />
+    <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div class="top_menu">
+      <div class="header">
+        <div class="leftside_menu">
+          <img
+            class="top_logo"
+            src="{% static 'img/thumb-clipart-healthy-protein-18.png' %}"
+            alt="siteLogo"
+          />
+          <h2 class="site_name">MyRecipes.com</h2>
+        </div>
+        <div class="nav_menu">
+          <li class="link_menu_home"><a href="/index">Главная</a></li>
+          <li><a href="/recipes_category">Все рецепты</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="/my_recipes">Мои рецепты</a></li>
+          <li class="link_menu"><a href="/recipe_add">Добавить рецепт</a></li>
+          <li>{{ user.get_username }}</li>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="button_exit" type="submit">Выход</button>
+          </form>
+          {% else %}
+          <li class="link_menu"><a href="/accounts/login">Вход</a></li>
+          <li class="link_menu">
+            <a href="/registration_user">Регистрация</a>
+          </li>
+          {% endif %}
+        </div>
+      </div>
+      <div class="top_content">
+        {% block content %}
+        <h1>Тут будет контент</h1>
+        {% endblock %}
+      </div>
+      <div class="down_content">
+        <div class="creaters">By Rogovtsov Dmitriy</div>
+      </div>
+    </div>
+  </body>
+</html>

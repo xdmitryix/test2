@@ -12,6 +12,7 @@ from random import sample
 from django.template.defaultfilters import mark_safe
 from django.utils.html import mark_safe
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 
 
 
@@ -24,7 +25,7 @@ def index(request: HttpRequest):
     recipes_rnd = sample(recipes, 5)
     return render(request, 'myapp/index.html', {'recipes': recipes_rnd})
 
-
+@csrf_protect
 def user_login(request):
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -37,7 +38,7 @@ def user_login(request):
     return render(request, 'myapp/login.html', {'form': form})
 
 
-
+@csrf_protect
 def registration_user(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -57,7 +58,7 @@ def registration_success(request):
     return render(request, 'myapp/registration_success.html')
 
 
-
+@csrf_protect
 def recipes_category(request):
     if request.method == 'POST':
         form = Recipes_showForm(request.POST)
@@ -70,7 +71,7 @@ def recipes_category(request):
 
     return render(request, 'myapp/recipes_category.html', {'form': form, 'recipes': recipes})
 
-
+@csrf_protect
 @login_required
 def recipe_add(request):
     if request.method == 'POST':
@@ -104,7 +105,7 @@ def my_recipes(request):
     recipes = Recipe.objects.filter(author=request.user)
     return render(request, 'myapp/my_recipes.html', {'recipes': recipes})
 
-
+@csrf_protect
 @login_required
 def recipe_redact(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
